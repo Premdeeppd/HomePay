@@ -28,7 +28,7 @@ export async function updateProfile(userId, { name, phone, avatar }) {
         throw ApiError.from(ErrorCodes.CONFLICT, "Phone number is already registered by another user");
       }
     }
-    user.phone = phone;
+    user.phone = phone || undefined;
   }
 
   if (name !== undefined) user.name = name;

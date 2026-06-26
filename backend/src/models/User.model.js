@@ -35,7 +35,6 @@ const userSchema = new mongoose.Schema(
 
     phone: {
       type: String,
-      default: null,
       trim: true,
     },
 
@@ -57,7 +56,6 @@ const userSchema = new mongoose.Schema(
     // ── OAuth fields (deferred, but schema is ready) ──────────
     googleId: {
       type: String,
-      default: null,
     },
 
     authProvider: {
@@ -112,15 +110,14 @@ userSchema.index({ name: "text", email: "text" });
 // because Mongoose binds `this` to the document being saved.
 // Arrow functions don't have their own `this`.
 
-userSchema.pre("save", async function (next) {
+userSchema.pre("save", async function () {
   // Only hash if the password was changed (or is new).
   // Without this check, the password would get re-hashed on every .save(),
   // making the original password unrecoverable.
-  if (!this.isModified("password")) return next();
+  if (!this.isModified("password")) return;
 
   const salt = await bcrypt.genSalt(12);
   this.password = await bcrypt.hash(this.password, salt);
-  next();
 });
 
 // ── Instance Method ────────────────────────────────────────────

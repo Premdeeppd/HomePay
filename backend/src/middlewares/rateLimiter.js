@@ -1,6 +1,7 @@
 import rateLimit from "express-rate-limit";
 import ApiError from "../errors/apiError.js";
 import { ErrorCodes } from "../errors/errorCodes.js";
+import env from "../config/env.js";
 
 /**
  * Rate Limiting Middlewares
@@ -32,6 +33,7 @@ export const loginLimiter = rateLimit({
   handler: limitHandler,
   standardHeaders: true, // Return rate limit info in `RateLimit-*` headers
   legacyHeaders: false, // Disable deprecated `X-RateLimit-*` headers
+  skip: () => env.NODE_ENV === "development",
 });
 
 // Limit registrations to 3 accounts per hour per IP (prevent bot spam)
@@ -42,6 +44,7 @@ export const registerLimiter = rateLimit({
   handler: limitHandler,
   standardHeaders: true,
   legacyHeaders: false,
+  skip: () => env.NODE_ENV === "development",
 });
 
 // Limit refresh requests to 10 per 15 minutes (prevent token spamming)
@@ -52,4 +55,5 @@ export const refreshLimiter = rateLimit({
   handler: limitHandler,
   standardHeaders: true,
   legacyHeaders: false,
+  skip: () => env.NODE_ENV === "development",
 });

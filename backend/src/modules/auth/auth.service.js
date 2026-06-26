@@ -57,7 +57,7 @@ export async function register({ name, email, password, phone, userAgent, ipAddr
     name,
     email,
     password,
-    phone,
+    phone: phone || undefined,
     balance: 1000, // Starting balance of ₹1,000 for learning/simulation convenience
   });
 
