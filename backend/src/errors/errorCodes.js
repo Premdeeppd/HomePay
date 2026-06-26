@@ -131,4 +131,9 @@ export const ErrorCodes = {
     code: "ALREADY_WALLET_MEMBER",
     message: "User is already a wallet member",
   },
+  TOO_MANY_REQUESTS: {
+    status: 429,
+    code: "TOO_MANY_REQUESTS",
+    message: "Too many requests, please try again later",
+  },
 };
